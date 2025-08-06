@@ -1,0 +1,198 @@
+[
+  {
+    "method": "addBookToLibrary",
+    "current_class": "Library",
+    "best_class": "Library",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "recordBorrowedBook",
+    "current_class": "Library",
+    "best_class": "Library",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "removeBorrowedBook",
+    "current_class": "Library",
+    "best_class": "Library",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "searchABookInLibrary",
+    "current_class": "Library",
+    "best_class": "Library",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getAvailableBooksInLibrary",
+    "current_class": "Library",
+    "best_class": "Library",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getInventory",
+    "current_class": "Library",
+    "best_class": "Library",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getUserLoans",
+    "current_class": "Library",
+    "best_class": "Library",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "formatUserProfile",
+    "current_class": "Library",
+    "best_class": "User",
+    "score": 0.671999990940094,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "generateUserLoanReport",
+    "current_class": "Library",
+    "best_class": "User",
+    "score": 0.6380000114440918,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "calculateBookUtilizationStats",
+    "current_class": "Library",
+    "best_class": "Library",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "calculateFine",
+    "current_class": "Library",
+    "best_class": "Book",
+    "score": 0.675000011920929,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "borrowBook",
+    "current_class": "User",
+    "best_class": "Library",
+    "score": 0.8009999990463257,
+    "action": "MOVE to Library"
+  },
+  {
+    "method": "returnBook",
+    "current_class": "User",
+    "best_class": "Library",
+    "score": 0.8379999995231628,
+    "action": "MOVE to Library"
+  },
+  {
+    "method": "searchCatalog",
+    "current_class": "User",
+    "best_class": "Library",
+    "score": 0.796999990940094,
+    "action": "MOVE to Library"
+  },
+  {
+    "method": "viewAvailableBooks",
+    "current_class": "User",
+    "best_class": "Library",
+    "score": 0.8450000286102295,
+    "action": "MOVE to Library"
+  },
+  {
+    "method": "getOverdueBooks",
+    "current_class": "User",
+    "best_class": "Library",
+    "score": 0.7960000038146973,
+    "action": "MOVE to Library"
+  },
+  {
+    "method": "calculateOutstandingFines",
+    "current_class": "User",
+    "best_class": "Library",
+    "score": 0.6759999990463257,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "notifyOverdueReminders",
+    "current_class": "User",
+    "best_class": "Book",
+    "score": 0.7279999852180481,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "getUserName",
+    "current_class": "User",
+    "best_class": "User",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getUserId",
+    "current_class": "User",
+    "best_class": "User",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getEmail",
+    "current_class": "User",
+    "best_class": "User",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getTitle",
+    "current_class": "Book",
+    "best_class": "Book",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getAuthor",
+    "current_class": "Book",
+    "best_class": "Book",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getISBN",
+    "current_class": "Book",
+    "best_class": "Book",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "isAvailable",
+    "current_class": "Book",
+    "best_class": "Book",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getDueDate",
+    "current_class": "Book",
+    "best_class": "Book",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "borrow",
+    "current_class": "Book",
+    "best_class": "Book",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "returnBook",
+    "current_class": "Book",
+    "best_class": "Book",
+    "score": 1.0,
+    "action": "KEEP"
+  }
+]

@@ -1,0 +1,930 @@
+{
+  "Library": {
+    "summary": "The `Library` class in Java is responsible for managing a collection of books. It owns the following fields:\n\n* `catalog`: a map that contains all the books in the library, keyed by their ISBN number.\n* `userLoans`: a map that keeps track of which users have borrowed which books and when they are due to return them. Each key is a user object, and each value is a list of books that the user has borrowed from the library.\n\nThe class has several methods for managing the library's inventory:\n\n* `addBookToLibrary(Book)`: adds a new book to the library catalog.\n* `recordBorrowedBook(User, Book)`: records a book that a user has borrowed from the library.\n* `removeBorrowedBook(User, Book)`: removes a book that a user has returned from the library's inventory.\n* `searchABookInLibrary(String)`: searches for books in the library catalog based on their title, author, or ISBN number.\n* `getAvailableBooksInLibrary()`: returns a list of all the books that are currently available to borrow from the library.\n* `getInventory()`: returns a list of all the books in the library's catalog, regardless of whether they are currently available for loan.\n* `getUserLoans()`: returns a map of all the books that each user has borrowed from the library, along with the date that each book is due to be returned.\n\nThe class also provides several methods for generating reports and calculating fines:\n\n* `formatUserProfile(User)`: generates a formatted string that includes information about a user's name, email address, and the books they have borrowed from the library.\n* `generateUserLoanReport(User)`: generates a report that lists all the books a user has borrowed from the library, along with the due date for each book.\n* `calculateBookUtilizationStats()`: calculates statistics about how often different books are borrowed from the library. The method returns a map of book titles to integers representing the number of times each book has been borrowed.\n* `calculateFine(User, Date)`: calculates the total fine that should be charged to a user for returning books late. The method takes a user object and a date, and returns the total fine as a double value.",
+    "uses_classes": [
+      "Book",
+      "Date",
+      "List",
+      "String",
+      "User",
+      "available",
+      "b",
+      "book",
+      "catalog",
+      "java",
+      "loaned",
+      "matches",
+      "report",
+      "sb",
+      "stats",
+      "today",
+      "user",
+      "userLoans"
+    ],
+    "package": "java.library_management",
+    "classBody": "package java.library_management;\n\nimport java.util.ArrayList;\nimport java.util.Date;\nimport java.util.HashMap;\nimport java.util.List;\nimport java.util.Map;\n\npublic class Library {\n    private Map<String, Book> catalog         = new HashMap<>();  \n    private Map<User, List<Book>> userLoans   = new HashMap<>();\n\n    public void addBookToLibrary(Book book) {\n        catalog.put(book.getISBN(), book);\n    }\n\n    public void recordBorrowedBook(User user, Book book) {\n        userLoans.computeIfAbsent(user, k -> new ArrayList<>()).add(book);\n    }\n\n    public boolean removeBorrowedBook(User user, Book book) {\n        if (userLoans.containsKey(user)) {\n            return userLoans.get(user).remove(book);\n        }\n        return false;\n    }\n\n    public List<Book> searchABookInLibrary(String query) {\n        List<Book> matches = new ArrayList<>();\n        for (Book b : catalog.values()) {\n            if (b.getTitle().contains(query) ||\n                b.getAuthor().contains(query) ||\n                b.getISBN().equals(query)) {\n                matches.add(b);\n            }\n        }\n        return matches;\n    }\n\n    public List<Book> getAvailableBooksInLibrary() {\n        List<Book> available = new ArrayList<>();\n        for (Book b : catalog.values()) {\n            if (b.isAvailable()) available.add(b);\n        }\n        return available;\n    }\n\n    public List<Book> getInventory() {\n        return new ArrayList<>(catalog.values());\n    }\n\n    public Map<User, List<Book>> getUserLoans() {\n        return userLoans;\n    }\n\n    public String formatUserProfile(User user) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"User: \").append(user.getUserName())\n          .append(\" (\").append(user.getEmail()).append(\")\\n\")\n          .append(\"Borrowed books:\\n\");\n        for (Book b : userLoans.getOrDefault(user, List.of())) {\n            sb.append(\" • \").append(b.getTitle())\n              .append(\" due \").append(b.getDueDate()).append(\"\\n\");\n        }\n        return sb.toString();\n    }\n\n    public String generateUserLoanReport(User user) {\n        StringBuilder report = new StringBuilder();\n        report.append(\"Loan Report for \").append(user.getUserId()).append(\"\\n\");\n        for (Book b : userLoans.getOrDefault(user, List.of())) {\n            report.append(b.getTitle())\n                  .append(\" by \").append(b.getAuthor())\n                  .append(\" — due \").append(b.getDueDate())\n                  .append(\"\\n\");\n        }\n        return report.toString();\n    }\n\n    public Map<String, Integer> calculateBookUtilizationStats() {\n        Map<String, Integer> stats = new HashMap<>();\n        for (Book b : catalog.values()) {\n            int count = 0;\n            for (List<Book> loans : userLoans.values()) {\n                for (Book loaned : loans) {\n                    if (loaned.getISBN().equals(b.getISBN())) {\n                        count++;\n                    }\n                }\n            }\n            stats.put(b.getTitle(), count);\n        }\n        return stats;\n    }\n\n    public double calculateFine(User user, Date today) {\n        double total = 0;\n        for (Book b : userLoans.getOrDefault(user, List.of())) {\n            long daysLate = java.time.temporal.ChronoUnit.DAYS.between(\n                b.getDueDate().toInstant(), today.toInstant()\n            );\n            if (daysLate > 0) {\n                total += daysLate * 1.0; \n            }\n        }\n        return total;\n    }\n}",
+    "classFields": [
+      {
+        "var_type": "Map<String,Book>",
+        "var_name": "catalog"
+      },
+      {
+        "var_type": "Map<User,List<Book>>",
+        "var_name": "userLoans"
+      }
+    ],
+    "methods": {
+      "addBookToLibrary": "Adds a book to the library catalog using the `catalog.put` method, which associates the book's ISBN (International Standard Book Number) with the book object itself in the catalog.",
+      "recordBorrowedBook": "Recorded borrowed book by storing its id in an array list associated with the user who borrowed it in a map keyed by user.",
+      "removeBorrowedBook": "This method removes a book from a user's list of borrowed books and returns whether or not the book was successfully removed.",
+      "searchABookInLibrary": "Sends a search query to retrieve a list of books that match the query from a library catalog.",
+      "getAvailableBooksInLibrary": "Sends a request to retrieve all available books from the library's catalog and returns a list of those books.",
+      "getInventory": "The `getInventory` method retrieves all books available for rent from the catalog of the library management system.",
+      "getUserLoans": "This method retrieves all loans for each user from the `userLoans` map and returns them as a `Map<User, List<Book>>`.",
+      "formatUserProfile": "This method formats a user profile as a string by appending various information about the user, including their username, email, and borrowed books.",
+      "generateUserLoanReport": "Sends user loan report to String.",
+      "calculateBookUtilizationStats": "The `calculateBookUtilizationStats` method iterates over all books in the catalog, counts the number of users who have checked out each book, and returns a map of book titles to their corresponding check-out counts.",
+      "calculateFine": "Calculates the total fine amount for the given user by calculating the number of days late for each book loan and multiplying it by 1.0 to convert to a double value."
+    },
+    "methods_meta": [
+      {
+        "name": "addBookToLibrary",
+        "parameters": [
+          "Book"
+        ],
+        "methodCalls": [
+          "catalog.put",
+          "book.getISBN"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    catalog.put(book.getISBN(), book);\n}"
+      },
+      {
+        "name": "recordBorrowedBook",
+        "parameters": [
+          "User",
+          "Book"
+        ],
+        "methodCalls": [
+          "userLoans.computeIfAbsent(user, k -> new ArrayList<>()).add",
+          "userLoans.computeIfAbsent"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    userLoans.computeIfAbsent(user, k -> new ArrayList<>()).add(book);\n}"
+      },
+      {
+        "name": "removeBorrowedBook",
+        "parameters": [
+          "User",
+          "Book"
+        ],
+        "methodCalls": [
+          "userLoans.containsKey",
+          "userLoans.get(user).remove",
+          "userLoans.get"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    if (userLoans.containsKey(user)) {\n        return userLoans.get(user).remove(book);\n    }\n    return false;\n}"
+      },
+      {
+        "name": "searchABookInLibrary",
+        "parameters": [
+          "String"
+        ],
+        "methodCalls": [
+          "catalog.values",
+          "b.getTitle().contains",
+          "b.getTitle",
+          "b.getAuthor().contains",
+          "b.getAuthor",
+          "b.getISBN().equals",
+          "b.getISBN",
+          "matches.add"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    List<Book> matches = new ArrayList<>();\n    for (Book b : catalog.values()) {\n        if (b.getTitle().contains(query) || b.getAuthor().contains(query) || b.getISBN().equals(query)) {\n            matches.add(b);\n        }\n    }\n    return matches;\n}"
+      },
+      {
+        "name": "getAvailableBooksInLibrary",
+        "parameters": [],
+        "methodCalls": [
+          "catalog.values",
+          "b.isAvailable",
+          "available.add"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    List<Book> available = new ArrayList<>();\n    for (Book b : catalog.values()) {\n        if (b.isAvailable())\n            available.add(b);\n    }\n    return available;\n}"
+      },
+      {
+        "name": "getInventory",
+        "parameters": [],
+        "methodCalls": [
+          "catalog.values"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    return new ArrayList<>(catalog.values());\n}"
+      },
+      {
+        "name": "getUserLoans",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    return userLoans;\n}"
+      },
+      {
+        "name": "formatUserProfile",
+        "parameters": [
+          "User"
+        ],
+        "methodCalls": [
+          "sb.append(\"User: \").append(user.getUserName()).append(\" (\").append(user.getEmail()).append(\")\\n\").append",
+          "sb.append(\"User: \").append(user.getUserName()).append(\" (\").append(user.getEmail()).append",
+          "sb.append(\"User: \").append(user.getUserName()).append(\" (\").append",
+          "sb.append(\"User: \").append(user.getUserName()).append",
+          "sb.append(\"User: \").append",
+          "sb.append",
+          "user.getUserName",
+          "user.getEmail",
+          "userLoans.getOrDefault",
+          "List.of",
+          "sb.append(\" • \").append(b.getTitle()).append(\" due \").append(b.getDueDate()).append",
+          "sb.append(\" • \").append(b.getTitle()).append(\" due \").append",
+          "sb.append(\" • \").append(b.getTitle()).append",
+          "sb.append(\" • \").append",
+          "sb.append",
+          "b.getTitle",
+          "b.getDueDate",
+          "sb.toString"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    StringBuilder sb = new StringBuilder();\n    sb.append(\"User: \").append(user.getUserName()).append(\" (\").append(user.getEmail()).append(\")\\n\").append(\"Borrowed books:\\n\");\n    for (Book b : userLoans.getOrDefault(user, List.of())) {\n        sb.append(\" • \").append(b.getTitle()).append(\" due \").append(b.getDueDate()).append(\"\\n\");\n    }\n    return sb.toString();\n}"
+      },
+      {
+        "name": "generateUserLoanReport",
+        "parameters": [
+          "User"
+        ],
+        "methodCalls": [
+          "report.append(\"Loan Report for \").append(user.getUserId()).append",
+          "report.append(\"Loan Report for \").append",
+          "report.append",
+          "user.getUserId",
+          "userLoans.getOrDefault",
+          "List.of",
+          "report.append(b.getTitle()).append(\" by \").append(b.getAuthor()).append(\" — due \").append(b.getDueDate()).append",
+          "report.append(b.getTitle()).append(\" by \").append(b.getAuthor()).append(\" — due \").append",
+          "report.append(b.getTitle()).append(\" by \").append(b.getAuthor()).append",
+          "report.append(b.getTitle()).append(\" by \").append",
+          "report.append(b.getTitle()).append",
+          "report.append",
+          "b.getTitle",
+          "b.getAuthor",
+          "b.getDueDate",
+          "report.toString"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    StringBuilder report = new StringBuilder();\n    report.append(\"Loan Report for \").append(user.getUserId()).append(\"\\n\");\n    for (Book b : userLoans.getOrDefault(user, List.of())) {\n        report.append(b.getTitle()).append(\" by \").append(b.getAuthor()).append(\" — due \").append(b.getDueDate()).append(\"\\n\");\n    }\n    return report.toString();\n}"
+      },
+      {
+        "name": "calculateBookUtilizationStats",
+        "parameters": [],
+        "methodCalls": [
+          "catalog.values",
+          "userLoans.values",
+          "loaned.getISBN().equals",
+          "loaned.getISBN",
+          "b.getISBN",
+          "stats.put",
+          "b.getTitle"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    Map<String, Integer> stats = new HashMap<>();\n    for (Book b : catalog.values()) {\n        int count = 0;\n        for (List<Book> loans : userLoans.values()) {\n            for (Book loaned : loans) {\n                if (loaned.getISBN().equals(b.getISBN())) {\n                    count++;\n                }\n            }\n        }\n        stats.put(b.getTitle(), count);\n    }\n    return stats;\n}"
+      },
+      {
+        "name": "calculateFine",
+        "parameters": [
+          "User",
+          "Date"
+        ],
+        "methodCalls": [
+          "userLoans.getOrDefault",
+          "List.of",
+          "java.time.temporal.ChronoUnit.DAYS.between",
+          "b.getDueDate().toInstant",
+          "b.getDueDate",
+          "today.toInstant"
+        ],
+        "methodFieldAccess": [
+          "java.time.temporal.ChronoUnit.DAYS",
+          "java.time.temporal.ChronoUnit",
+          "java.time.temporal",
+          "java.time"
+        ],
+        "classFields": [
+          {
+            "var_type": "Map<String,Book>",
+            "var_name": "catalog"
+          },
+          {
+            "var_type": "Map<User,List<Book>>",
+            "var_name": "userLoans"
+          }
+        ],
+        "methodBody": "{\n    double total = 0;\n    for (Book b : userLoans.getOrDefault(user, List.of())) {\n        long daysLate = java.time.temporal.ChronoUnit.DAYS.between(b.getDueDate().toInstant(), today.toInstant());\n        if (daysLate > 0) {\n            total += daysLate * 1.0;\n        }\n    }\n    return total;\n}"
+      }
+    ]
+  },
+  "User": {
+    "summary": "This Java class represents a library user. It owns three fields: `userName`, `userId`, and `email`. The class also contains several methods, including `borrowBook()`, `returnBook()`, `searchCatalog()`, `viewAvailableBooks()`, `getOverdueBooks()`, `calculateOutstandingFines()`, `notifyOverdueReminders()`, `getUserName()`, `getUserId()`, and `getEmail()`.\n\nThe class's methods allow a user to borrow books, return them when they are overdue, search for specific books in the library catalog, view all available books, get a list of their overdue books, calculate the outstanding fines, and notify them of any overdue reminders. The class also uses external classes such as `Book`, `Date`, and `Library` to perform its operations.",
+    "uses_classes": [
+      "Book",
+      "Date",
+      "List",
+      "String",
+      "System",
+      "available",
+      "b",
+      "book",
+      "library",
+      "loans",
+      "overdue"
+    ],
+    "package": "java.library_management",
+    "classBody": "package java.library_management;\n\nimport java.util.ArrayList;\nimport java.util.Date;\nimport java.util.List;\nimport java.util.Map;\n\npublic class User {\n    private String userName;\n    private String userId;\n    private String email;\n    private Library library;\n\n    public User(String userName, String userId, String email, Library library) {\n        this.userName    = userName;\n        this.userId  = userId;\n        this.email   = email;\n        this.library = library;\n    }\n\n\n    public void borrowBook(Book book, Date dueDate) {\n        if (book.isAvailable()) {\n            book.borrow(dueDate);\n            library.recordBorrowedBook(this, book);\n        }\n    }\n\n    public void returnBook(Book book) {\n        if (library.removeBorrowedBook(this, book)) {\n            book.returnBook();\n        }\n    }\n\n\n    public List<Book> searchCatalog(String query) {\n        return library.searchABookInLibrary(query);\n    }\n\n    public List<Book> viewAvailableBooks() {\n        List<Book> available = new ArrayList<>();\n        for (Book b : library.getInventory()) {\n            if (b.isAvailable()) {\n                available.add(b);\n            }\n        }\n        return available;\n    }\n\n    public List<Book> getOverdueBooks(Date today) {\n        List<Book> overdue = new ArrayList<>();\n        Map<User, List<Book>> loans = library.getUserLoans();\n        for (Book b : loans.getOrDefault(this, List.of())) {\n            if (b.getDueDate().before(today)) {\n                overdue.add(b);\n            }\n        }\n        return overdue;\n    }\n\n    public double calculateOutstandingFines(Date today) {\n        return library.calculateFine(this, today);\n    }\n\n    public void notifyOverdueReminders(Date today) {\n        List<Book> overdue = getOverdueBooks(today);\n        for (Book b : overdue) {\n            System.out.println(\n                \"Email to \" + email +\n                \": you have an overdue book \\\"\" + b.getTitle() + \"\\\"\"\n            );\n        }\n    }\n\n    public String getUserName()   { return userName; }\n    public String getUserId() { return userId; }\n    public String getEmail()  { return email; }\n}",
+    "classFields": [
+      {
+        "var_type": "String",
+        "var_name": "userName"
+      },
+      {
+        "var_type": "String",
+        "var_name": "userId"
+      },
+      {
+        "var_type": "String",
+        "var_name": "email"
+      },
+      {
+        "var_type": "Library",
+        "var_name": "library"
+      }
+    ],
+    "methods": {
+      "borrowBook": "The `borrowBook` method checks if the provided book is available to borrow, then updates the status of the book and records the borrowing event in the library's system.",
+      "returnBook": "This method removes the book from the borrowed books list of the library and calls the `returnBook` method on the book object.",
+      "searchCatalog": "The `searchCatalog` method searches for books in the library catalog using the `library.searchABookInLibrary(query)` method call.",
+      "viewAvailableBooks": "The method `viewAvailableBooks` retrieves a list of available books from the library's inventory and returns it to the caller.",
+      "getOverdueBooks": "The method `getOverdueBooks` retrieves a list of books that have been checked out by users and are now overdue.",
+      "calculateOutstandingFines": "This method `calculateOutstandingFines` is responsible for calculating the outstanding fines of a user based on their due date and the current date. It does this by calling the `calculateFine` method on the `library` object, passing in the `this` object (the user) and the `today` date as arguments. The return value is then cast to a double and returned from the method.",
+      "notifyOverdueReminders": "This method retrieves all books that are overdue from the system, and then sends an email to each book's owner with information about their overdue book, including its title.",
+      "getUserName": "Sends the user name to the external service for authentication purposes.",
+      "getUserId": "Returns the user ID string.",
+      "getEmail": "The `getEmail` method retrieves the email address of the current user."
+    },
+    "methods_meta": [
+      {
+        "name": "borrowBook",
+        "parameters": [
+          "Book",
+          "Date"
+        ],
+        "methodCalls": [
+          "book.isAvailable",
+          "book.borrow",
+          "library.recordBorrowedBook"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    if (book.isAvailable()) {\n        book.borrow(dueDate);\n        library.recordBorrowedBook(this, book);\n    }\n}"
+      },
+      {
+        "name": "returnBook",
+        "parameters": [
+          "Book"
+        ],
+        "methodCalls": [
+          "library.removeBorrowedBook",
+          "book.returnBook"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    if (library.removeBorrowedBook(this, book)) {\n        book.returnBook();\n    }\n}"
+      },
+      {
+        "name": "searchCatalog",
+        "parameters": [
+          "String"
+        ],
+        "methodCalls": [
+          "library.searchABookInLibrary"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    return library.searchABookInLibrary(query);\n}"
+      },
+      {
+        "name": "viewAvailableBooks",
+        "parameters": [],
+        "methodCalls": [
+          "library.getInventory",
+          "b.isAvailable",
+          "available.add"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    List<Book> available = new ArrayList<>();\n    for (Book b : library.getInventory()) {\n        if (b.isAvailable()) {\n            available.add(b);\n        }\n    }\n    return available;\n}"
+      },
+      {
+        "name": "getOverdueBooks",
+        "parameters": [
+          "Date"
+        ],
+        "methodCalls": [
+          "library.getUserLoans",
+          "loans.getOrDefault",
+          "List.of",
+          "b.getDueDate().before",
+          "b.getDueDate",
+          "overdue.add"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    List<Book> overdue = new ArrayList<>();\n    Map<User, List<Book>> loans = library.getUserLoans();\n    for (Book b : loans.getOrDefault(this, List.of())) {\n        if (b.getDueDate().before(today)) {\n            overdue.add(b);\n        }\n    }\n    return overdue;\n}"
+      },
+      {
+        "name": "calculateOutstandingFines",
+        "parameters": [
+          "Date"
+        ],
+        "methodCalls": [
+          "library.calculateFine"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    return library.calculateFine(this, today);\n}"
+      },
+      {
+        "name": "notifyOverdueReminders",
+        "parameters": [
+          "Date"
+        ],
+        "methodCalls": [
+          "getOverdueBooks",
+          "System.out.println",
+          "b.getTitle"
+        ],
+        "methodFieldAccess": [
+          "System.out"
+        ],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    List<Book> overdue = getOverdueBooks(today);\n    for (Book b : overdue) {\n        System.out.println(\"Email to \" + email + \": you have an overdue book \\\"\" + b.getTitle() + \"\\\"\");\n    }\n}"
+      },
+      {
+        "name": "getUserName",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    return userName;\n}"
+      },
+      {
+        "name": "getUserId",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    return userId;\n}"
+      },
+      {
+        "name": "getEmail",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "userName"
+          },
+          {
+            "var_type": "String",
+            "var_name": "userId"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "Library",
+            "var_name": "library"
+          }
+        ],
+        "methodBody": "{\n    return email;\n}"
+      }
+    ]
+  },
+  "Book": {
+    "summary": "1. The class `Book` has three fields: `title`, `author`, and `isbn`.\n2. The method `getTitle()` returns the title of the book.\nThe method `getAuthor()` returns the author of the book.\nThe method `getISBN()` returns the ISBN (International Standard Book Number) of the book.\nThe method `isAvailable()` returns a boolean indicating whether the book is available to be borrowed or not.\nThe method `getDueDate()` returns the date by which the book is due, or null if the book is not currently checked out.\nThe method `borrow(java.util.Date)` sets the due date for the book and marks it as unavailable.\nThe method `returnBook()` marks the book as available again and clears its due date.",
+    "uses_classes": [
+      "java.util.Date"
+    ],
+    "package": "java.library_management",
+    "classBody": "package java.library_management;\n\npublic class Book {\n    private String title;\n    private String author;\n    private String isbn;\n    private boolean isAvailable;\n    private java.util.Date dueDate;\n\n    public Book(String title, String author, String isbn) {\n        this.title       = title;\n        this.author      = author;\n        this.isbn        = isbn;\n        this.isAvailable = true;\n    }\n\n    public String getTitle()     { return title; }\n    public String getAuthor()    { return author; }\n    public String getISBN()      { return isbn; }\n    public boolean isAvailable() { return isAvailable; }\n    public java.util.Date getDueDate() { return dueDate; }\n\n    public void borrow(java.util.Date dueDate) {\n        this.isAvailable = false;\n        this.dueDate     = dueDate;\n    }\n\n    public void returnBook() {\n        this.isAvailable = true;\n        this.dueDate     = null;\n    }\n}",
+    "classFields": [
+      {
+        "var_type": "String",
+        "var_name": "title"
+      },
+      {
+        "var_type": "String",
+        "var_name": "author"
+      },
+      {
+        "var_type": "String",
+        "var_name": "isbn"
+      },
+      {
+        "var_type": "boolean",
+        "var_name": "isAvailable"
+      },
+      {
+        "var_type": "java.util.Date",
+        "var_name": "dueDate"
+      }
+    ],
+    "methods": {
+      "getTitle": "The `getTitle` method returns the title of the book as a string.",
+      "getAuthor": "This method retrieves the author of a book from its `author` field.",
+      "getISBN": "This method returns the value of the `isbn` field as a string.",
+      "isAvailable": "This method returns whether the current user is available to process the request or not.",
+      "getDueDate": "The getDueDate() method returns the due date of the book as a Date object.",
+      "borrow": "This method sets the `isAvailable` field to `false` and assigns the given `dueDate` parameter to the `dueDate` field.",
+      "returnBook": "This method sets the book's availability to true and due date to null, indicating that the book is now available for checkout by another user."
+    },
+    "methods_meta": [
+      {
+        "name": "getTitle",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "title"
+          },
+          {
+            "var_type": "String",
+            "var_name": "author"
+          },
+          {
+            "var_type": "String",
+            "var_name": "isbn"
+          },
+          {
+            "var_type": "boolean",
+            "var_name": "isAvailable"
+          },
+          {
+            "var_type": "java.util.Date",
+            "var_name": "dueDate"
+          }
+        ],
+        "methodBody": "{\n    return title;\n}"
+      },
+      {
+        "name": "getAuthor",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "title"
+          },
+          {
+            "var_type": "String",
+            "var_name": "author"
+          },
+          {
+            "var_type": "String",
+            "var_name": "isbn"
+          },
+          {
+            "var_type": "boolean",
+            "var_name": "isAvailable"
+          },
+          {
+            "var_type": "java.util.Date",
+            "var_name": "dueDate"
+          }
+        ],
+        "methodBody": "{\n    return author;\n}"
+      },
+      {
+        "name": "getISBN",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "title"
+          },
+          {
+            "var_type": "String",
+            "var_name": "author"
+          },
+          {
+            "var_type": "String",
+            "var_name": "isbn"
+          },
+          {
+            "var_type": "boolean",
+            "var_name": "isAvailable"
+          },
+          {
+            "var_type": "java.util.Date",
+            "var_name": "dueDate"
+          }
+        ],
+        "methodBody": "{\n    return isbn;\n}"
+      },
+      {
+        "name": "isAvailable",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "title"
+          },
+          {
+            "var_type": "String",
+            "var_name": "author"
+          },
+          {
+            "var_type": "String",
+            "var_name": "isbn"
+          },
+          {
+            "var_type": "boolean",
+            "var_name": "isAvailable"
+          },
+          {
+            "var_type": "java.util.Date",
+            "var_name": "dueDate"
+          }
+        ],
+        "methodBody": "{\n    return isAvailable;\n}"
+      },
+      {
+        "name": "getDueDate",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "title"
+          },
+          {
+            "var_type": "String",
+            "var_name": "author"
+          },
+          {
+            "var_type": "String",
+            "var_name": "isbn"
+          },
+          {
+            "var_type": "boolean",
+            "var_name": "isAvailable"
+          },
+          {
+            "var_type": "java.util.Date",
+            "var_name": "dueDate"
+          }
+        ],
+        "methodBody": "{\n    return dueDate;\n}"
+      },
+      {
+        "name": "borrow",
+        "parameters": [
+          "java.util.Date"
+        ],
+        "methodCalls": [],
+        "methodFieldAccess": [
+          "this.isAvailable",
+          "this.dueDate"
+        ],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "title"
+          },
+          {
+            "var_type": "String",
+            "var_name": "author"
+          },
+          {
+            "var_type": "String",
+            "var_name": "isbn"
+          },
+          {
+            "var_type": "boolean",
+            "var_name": "isAvailable"
+          },
+          {
+            "var_type": "java.util.Date",
+            "var_name": "dueDate"
+          }
+        ],
+        "methodBody": "{\n    this.isAvailable = false;\n    this.dueDate = dueDate;\n}"
+      },
+      {
+        "name": "returnBook",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [
+          "this.isAvailable",
+          "this.dueDate"
+        ],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "title"
+          },
+          {
+            "var_type": "String",
+            "var_name": "author"
+          },
+          {
+            "var_type": "String",
+            "var_name": "isbn"
+          },
+          {
+            "var_type": "boolean",
+            "var_name": "isAvailable"
+          },
+          {
+            "var_type": "java.util.Date",
+            "var_name": "dueDate"
+          }
+        ],
+        "methodBody": "{\n    this.isAvailable = true;\n    this.dueDate = null;\n}"
+      }
+    ]
+  }
+}

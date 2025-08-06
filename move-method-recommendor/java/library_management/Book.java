@@ -3,34 +3,30 @@ package java.library_management;
 public class Book {
     private String title;
     private String author;
-    private boolean isAvailable = true;
+    private String isbn;
+    private boolean isAvailable;
+    private java.util.Date dueDate;
 
-    public Book(String title, String author) {
-        this.title = title;
-        this.author = author;
+    public Book(String title, String author, String isbn) {
+        this.title       = title;
+        this.author      = author;
+        this.isbn        = isbn;
+        this.isAvailable = true;
     }
 
-    public void borrow() {
-        if (isAvailable) {
-            isAvailable = false;
-        } else {
-            throw new IllegalStateException("Book is already borrowed");
-        }
+    public String getTitle()     { return title; }
+    public String getAuthor()    { return author; }
+    public String getISBN()      { return isbn; }
+    public boolean isAvailable() { return isAvailable; }
+    public java.util.Date getDueDate() { return dueDate; }
+
+    public void borrow(java.util.Date dueDate) {
+        this.isAvailable = false;
+        this.dueDate     = dueDate;
     }
 
     public void returnBook() {
-        isAvailable = true;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getAuthor() {
-        return author;
+        this.isAvailable = true;
+        this.dueDate     = null;
     }
 }

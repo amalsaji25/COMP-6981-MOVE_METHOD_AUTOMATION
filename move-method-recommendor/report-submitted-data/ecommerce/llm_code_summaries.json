@@ -1,0 +1,750 @@
+{
+  "Order": {
+    "summary": "The Java class `Order` has two fields:\n\n* `id`: an integer that represents the order ID.\n* `total`: a double that represents the total cost of the order.\n\nIt has four methods:\n\n1. `getId()`: returns the value of the `id` field.\n2. `getTotal()`: returns the value of the `total` field.\n3. `printInvoice()`: prints an invoice for the order to the console, including the order ID and total cost.\n4. `formatInvoiceForEmail()`: formats the invoice information into a string that can be used when sending an email.",
+    "uses_classes": [
+      "System"
+    ],
+    "package": "java.ecommerce",
+    "classBody": "package java.ecommerce;\n\npublic class Order {\n    private int id;\n    private double total;\n\n    public Order(int id, double total) {\n        this.id = id;\n        this.total = total;\n    }\n\n    public int getId() { return id; }\n    public double getTotal() { return total; }\n\n    public void printInvoice() {\n        System.out.println(\"Invoice for Order #\" + id + \", Total: $\" + total);\n    }\n\n\n    public String formatInvoiceForEmail() {\n        return \"Order #\" + id + \" | Total: $\" + total;\n    }\n}",
+    "classFields": [
+      {
+        "var_type": "int",
+        "var_name": "id"
+      },
+      {
+        "var_type": "double",
+        "var_name": "total"
+      }
+    ],
+    "methods": {
+      "getId": "The `getId` method returns an integer value representing the ID of an object.",
+      "getTotal": "This method `getTotal` returns the total amount of an e-commerce transaction.",
+      "printInvoice": "The method `printInvoice` prints an invoice for a specific order to the console, using the provided id and total as parameters.",
+      "formatInvoiceForEmail": "The `formatInvoiceForEmail` method formats an invoice for email by returning a string containing the order ID and total cost of the order."
+    },
+    "methods_meta": [
+      {
+        "name": "getId",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "int",
+            "var_name": "id"
+          },
+          {
+            "var_type": "double",
+            "var_name": "total"
+          }
+        ],
+        "methodBody": "{\n    return id;\n}"
+      },
+      {
+        "name": "getTotal",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "int",
+            "var_name": "id"
+          },
+          {
+            "var_type": "double",
+            "var_name": "total"
+          }
+        ],
+        "methodBody": "{\n    return total;\n}"
+      },
+      {
+        "name": "printInvoice",
+        "parameters": [],
+        "methodCalls": [
+          "System.out.println"
+        ],
+        "methodFieldAccess": [
+          "System.out"
+        ],
+        "classFields": [
+          {
+            "var_type": "int",
+            "var_name": "id"
+          },
+          {
+            "var_type": "double",
+            "var_name": "total"
+          }
+        ],
+        "methodBody": "{\n    System.out.println(\"Invoice for Order #\" + id + \", Total: $\" + total);\n}"
+      },
+      {
+        "name": "formatInvoiceForEmail",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "int",
+            "var_name": "id"
+          },
+          {
+            "var_type": "double",
+            "var_name": "total"
+          }
+        ],
+        "methodBody": "{\n    return \"Order #\" + id + \" | Total: $\" + total;\n}"
+      }
+    ]
+  },
+  "Product": {
+    "summary": "Product is a class that represents a product. It has three fields: name, price, and category. The methods are getName(), which returns the name of the product, getPrice(), which returns the price of the product, and getCategory(), which returns the category of the product. There are no external classes used in this class.",
+    "uses_classes": [],
+    "package": "java.ecommerce",
+    "classBody": "package java.ecommerce;\n\npublic class Product {\n    private String name;\n    private double price;\n    private String category;\n\n    public Product(String name, double price, String category) {\n        this.name = name;\n        this.price = price;\n        this.category = category;\n    }\n\n    public String getName() { return name; }\n    public double getPrice() { return price; }\n    public String getCategory() { return category; }\n}",
+    "classFields": [
+      {
+        "var_type": "String",
+        "var_name": "name"
+      },
+      {
+        "var_type": "double",
+        "var_name": "price"
+      },
+      {
+        "var_type": "String",
+        "var_name": "category"
+      }
+    ],
+    "methods": {
+      "getName": "This method returns a String representing the name of the object.",
+      "getPrice": "The `getPrice` method returns the price of an item as a double value.",
+      "getCategory": "This method returns the category as a String."
+    },
+    "methods_meta": [
+      {
+        "name": "getName",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "double",
+            "var_name": "price"
+          },
+          {
+            "var_type": "String",
+            "var_name": "category"
+          }
+        ],
+        "methodBody": "{\n    return name;\n}"
+      },
+      {
+        "name": "getPrice",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "double",
+            "var_name": "price"
+          },
+          {
+            "var_type": "String",
+            "var_name": "category"
+          }
+        ],
+        "methodBody": "{\n    return price;\n}"
+      },
+      {
+        "name": "getCategory",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "double",
+            "var_name": "price"
+          },
+          {
+            "var_type": "String",
+            "var_name": "category"
+          }
+        ],
+        "methodBody": "{\n    return category;\n}"
+      }
+    ]
+  },
+  "Customer": {
+    "summary": "Based on the code provided, here is a summary of the `Customer` class:\n\n1. The `Customer` class owns two fields: `name` and `email`.\n2. The purpose of each method is as follows:\n\t* `placeOrder(Cart, PaymentService)`: places an order using a payment service.\n\t* `getName()`: retrieves the name of the customer.\n\t* `getEmail()`: retrieves the email address of the customer.\n\t* `getOrderHistory()`: retrieves a list of orders made by the customer.\n\t* `sendPromotionalEmail(String)`: sends a promotional email to the customer.\n\t* `calculateLoyaltyPoints()`: calculates the loyalty points earned by the customer based on their past purchases.\n3. The `Customer` class uses the following external classes:\n\t* `Cart`: the cart of items to be purchased.\n\t* `PaymentService`: the payment service used for processing payments.\n\t* `Order`: a representation of an order made by the customer.",
+    "uses_classes": [
+      "Cart",
+      "PaymentService",
+      "String",
+      "System",
+      "cart",
+      "o",
+      "order",
+      "orderHistory",
+      "paymentService"
+    ],
+    "package": "java.ecommerce",
+    "classBody": "package java.ecommerce;\n\nimport java.util.*;\n\npublic class Customer {\n    private String name;\n    private String email;\n    private List<Order> orderHistory = new ArrayList<>();\n\n    public Customer(String name, String email) {\n        this.name = name;\n        this.email = email;\n    }\n\n    public void placeOrder(Cart cart, PaymentService paymentService) {\n        Order order = new Order(orderHistory.size() + 1, cart.calculateTotal());\n        if (paymentService.processPayment(order, cart.getPaymentMethod())) {\n            orderHistory.add(order);\n            cart.clear();\n        } else {\n            System.out.println(\"Payment failed for order \" + order.getId());\n        }\n    }\n\n    public String getName() { return name; }\n    public String getEmail() { return email; }\n    public List<Order> getOrderHistory() { return orderHistory; }\n\n\n    public void sendPromotionalEmail(String message) {\n        System.out.println(\"Sending promo email to \" + email + \": \" + message);\n    }\n\n\n    public int calculateLoyaltyPoints() {\n        int points = 0;\n        for (Order o : orderHistory) {\n            points += (int) o.getTotal() / 10;\n        }\n        return points;\n    }\n}",
+    "classFields": [
+      {
+        "var_type": "String",
+        "var_name": "name"
+      },
+      {
+        "var_type": "String",
+        "var_name": "email"
+      },
+      {
+        "var_type": "List<Order>",
+        "var_name": "orderHistory"
+      }
+    ],
+    "methods": {
+      "placeOrder": "The method `placeOrder` creates an order object based on the current cart's contents, calculates its total cost, and attempts to process payment using a specified payment service. If successful, the method adds the order to the order history list and clears the cart. Otherwise, it prints an error message indicating that payment failed for the given order ID.",
+      "getName": "Sends the name of the object as a String.",
+      "getEmail": "The `getEmail` method retrieves the email address of the current user.",
+      "getOrderHistory": "Returns the order history for an ecommerce application.",
+      "sendPromotionalEmail": "Sends promotional emails to customers based on their email addresses.",
+      "calculateLoyaltyPoints": "This method calculates loyalty points based on the total amount spent by an Order object. It iterates over a list of Order objects (orderHistory) and adds the result of dividing each Order's total amount by 10 to the running total, ultimately returning the sum of all loyalty points."
+    },
+    "methods_meta": [
+      {
+        "name": "placeOrder",
+        "parameters": [
+          "Cart",
+          "PaymentService"
+        ],
+        "methodCalls": [
+          "orderHistory.size",
+          "cart.calculateTotal",
+          "paymentService.processPayment",
+          "cart.getPaymentMethod",
+          "orderHistory.add",
+          "cart.clear",
+          "System.out.println",
+          "order.getId"
+        ],
+        "methodFieldAccess": [
+          "System.out"
+        ],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "List<Order>",
+            "var_name": "orderHistory"
+          }
+        ],
+        "methodBody": "{\n    Order order = new Order(orderHistory.size() + 1, cart.calculateTotal());\n    if (paymentService.processPayment(order, cart.getPaymentMethod())) {\n        orderHistory.add(order);\n        cart.clear();\n    } else {\n        System.out.println(\"Payment failed for order \" + order.getId());\n    }\n}"
+      },
+      {
+        "name": "getName",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "List<Order>",
+            "var_name": "orderHistory"
+          }
+        ],
+        "methodBody": "{\n    return name;\n}"
+      },
+      {
+        "name": "getEmail",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "List<Order>",
+            "var_name": "orderHistory"
+          }
+        ],
+        "methodBody": "{\n    return email;\n}"
+      },
+      {
+        "name": "getOrderHistory",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "List<Order>",
+            "var_name": "orderHistory"
+          }
+        ],
+        "methodBody": "{\n    return orderHistory;\n}"
+      },
+      {
+        "name": "sendPromotionalEmail",
+        "parameters": [
+          "String"
+        ],
+        "methodCalls": [
+          "System.out.println"
+        ],
+        "methodFieldAccess": [
+          "System.out"
+        ],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "List<Order>",
+            "var_name": "orderHistory"
+          }
+        ],
+        "methodBody": "{\n    System.out.println(\"Sending promo email to \" + email + \": \" + message);\n}"
+      },
+      {
+        "name": "calculateLoyaltyPoints",
+        "parameters": [],
+        "methodCalls": [
+          "o.getTotal"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "String",
+            "var_name": "email"
+          },
+          {
+            "var_type": "List<Order>",
+            "var_name": "orderHistory"
+          }
+        ],
+        "methodBody": "{\n    int points = 0;\n    for (Order o : orderHistory) {\n        points += (int) o.getTotal() / 10;\n    }\n    return points;\n}"
+      }
+    ]
+  },
+  "OrderService": {
+    "summary": "The `OrderService` class owns no fields. It has two methods: `logOrder(Order)` and `refundOrder(Order, String)`.\n\n* `logOrder(Order)` prints a log message containing the order ID and total cost of the given `Order`.\n* `refundOrder(Order, String)` refunds the given `Order` using the specified payment method (e.g., credit card) and returns true if the refund was successful.",
+    "uses_classes": [
+      "Order",
+      "String",
+      "System",
+      "order"
+    ],
+    "package": "java.ecommerce",
+    "classBody": "package java.ecommerce;\n\npublic class OrderService {\n    public void logOrder(Order order) {\n        System.out.println(\"Logging order #\" + order.getId() + \" with total $\" + order.getTotal());\n    }\n\n    public boolean refundOrder(Order order, String method) {\n        System.out.println(\"Refunding order #\" + order.getId() + \" using \" + method);\n        return true;\n    }\n}",
+    "classFields": [],
+    "methods": {
+      "logOrder": "Logs the details of an order, including its ID and total cost, to the console using System.out.println().",
+      "refundOrder": "This method refunds an order using the specified payment method and returns true if successful, false otherwise."
+    },
+    "methods_meta": [
+      {
+        "name": "logOrder",
+        "parameters": [
+          "Order"
+        ],
+        "methodCalls": [
+          "System.out.println",
+          "order.getId",
+          "order.getTotal"
+        ],
+        "methodFieldAccess": [
+          "System.out"
+        ],
+        "classFields": [],
+        "methodBody": "{\n    System.out.println(\"Logging order #\" + order.getId() + \" with total $\" + order.getTotal());\n}"
+      },
+      {
+        "name": "refundOrder",
+        "parameters": [
+          "Order",
+          "String"
+        ],
+        "methodCalls": [
+          "System.out.println",
+          "order.getId"
+        ],
+        "methodFieldAccess": [
+          "System.out"
+        ],
+        "classFields": [],
+        "methodBody": "{\n    System.out.println(\"Refunding order #\" + order.getId() + \" using \" + method);\n    return true;\n}"
+      }
+    ]
+  },
+  "NotificationService": {
+    "summary": "The `NotificationService` class is responsible for sending emails to customers based on their order status. It has no fields, but it does have a method called `sendEmail(String, String)` that sends an email with the provided recipient and message. This method prints a message to the console indicating that an email was sent to the specified recipient with the provided message.\n\nThe class does not use any external classes or methods.",
+    "uses_classes": [
+      "String",
+      "System"
+    ],
+    "package": "java.ecommerce",
+    "classBody": "package java.ecommerce;\n\npublic class NotificationService {\n    public void sendEmail(String recipient, String message) {\n        System.out.println(\"Email sent to \" + recipient + \": \" + message);\n    }\n}",
+    "classFields": [],
+    "methods": {
+      "sendEmail": "Sends an email to a recipient containing a message."
+    },
+    "methods_meta": [
+      {
+        "name": "sendEmail",
+        "parameters": [
+          "String",
+          "String"
+        ],
+        "methodCalls": [
+          "System.out.println"
+        ],
+        "methodFieldAccess": [
+          "System.out"
+        ],
+        "classFields": [],
+        "methodBody": "{\n    System.out.println(\"Email sent to \" + recipient + \": \" + message);\n}"
+      }
+    ]
+  },
+  "PaymentService": {
+    "summary": "This Java class, `PaymentService`, owns no data fields. It has three methods:\n\n1. `processPayment(Order order, String paymentMethod)` processes a payment for the given order using the specified payment method.\n2. `validateCardNumber(String cardNumber)` validates whether the given card number is in a valid format or not.\n3. `fraudCheck(Order order)` performs a fraud check on the given order, returning true if the order total is below $1000.\n\nThis class uses no external classes except for `java.lang.String` and `java.ecommerce.Order`.",
+    "uses_classes": [
+      "Order",
+      "String",
+      "System",
+      "cardNumber",
+      "order",
+      "paymentMethod"
+    ],
+    "package": "java.ecommerce",
+    "classBody": "package java.ecommerce;\n\npublic class PaymentService {\n\n    public boolean processPayment(Order order, String paymentMethod) {\n        if (paymentMethod == null || paymentMethod.isEmpty()) {\n            return false;\n        }\n        System.out.println(\"Processing \" + paymentMethod + \" payment for order \" + order.getId());\n        return true;\n    }\n\n    public boolean validateCardNumber(String cardNumber) {\n        return cardNumber != null && cardNumber.matches(\"\\\\d{16}\");\n    }\n\n    public boolean fraudCheck(Order order) {\n        return order.getTotal() < 1000;\n    }\n}",
+    "classFields": [],
+    "methods": {
+      "processPayment": "The method `processPayment` takes an `Order` object and a payment method string as input and processes the payment using the provided payment method. It also prints a message to the console indicating that it is processing a payment for the order.",
+      "validateCardNumber": "The method `validateCardNumber` validates if the input card number is a 16-digit numeric string by matching it against the regex pattern `\\d{16}`.",
+      "fraudCheck": "This method `fraudCheck` validates whether an order is likely to be fraudulent by comparing its total cost to a predefined threshold of $1000."
+    },
+    "methods_meta": [
+      {
+        "name": "processPayment",
+        "parameters": [
+          "Order",
+          "String"
+        ],
+        "methodCalls": [
+          "paymentMethod.isEmpty",
+          "System.out.println",
+          "order.getId"
+        ],
+        "methodFieldAccess": [
+          "System.out"
+        ],
+        "classFields": [],
+        "methodBody": "{\n    if (paymentMethod == null || paymentMethod.isEmpty()) {\n        return false;\n    }\n    System.out.println(\"Processing \" + paymentMethod + \" payment for order \" + order.getId());\n    return true;\n}"
+      },
+      {
+        "name": "validateCardNumber",
+        "parameters": [
+          "String"
+        ],
+        "methodCalls": [
+          "cardNumber.matches"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [],
+        "methodBody": "{\n    return cardNumber != null && cardNumber.matches(\"\\\\d{16}\");\n}"
+      },
+      {
+        "name": "fraudCheck",
+        "parameters": [
+          "Order"
+        ],
+        "methodCalls": [
+          "order.getTotal"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [],
+        "methodBody": "{\n    return order.getTotal() < 1000;\n}"
+      }
+    ]
+  },
+  "Cart": {
+    "summary": "The `Cart` class is part of the ecommerce package and represents a shopping cart. It owns several data fields, including a list of products and a payment method. The class also has several methods for managing the shopping cart, such as adding or removing products, calculating the total cost, clearing the cart, and generating an order summary.\n\nMethod names:\n\n* `addProduct`: Adds a product to the shopping cart\n* `calculateTotal`: Calculates the total cost of all products in the shopping cart\n* `clear`: Clears the shopping cart\n* `getProducts`: Gets the list of products in the shopping cart\n* `setPaymentMethod`: Sets the payment method for the shopping cart\n* `getPaymentMethod`: Gets the current payment method for the shopping cart\n* `calculateTax`: Calculates the tax amount based on the total cost of all products in the shopping cart\n* `generateOrderSummary`: Generates an order summary for the customer, including the total cost and a list of products.",
+    "uses_classes": [
+      "Customer",
+      "Product",
+      "String",
+      "customer",
+      "double",
+      "p",
+      "products"
+    ],
+    "package": "java.ecommerce",
+    "classBody": "package java.ecommerce;\n\nimport java.util.*;\n\npublic class Cart {\n    private List<Product> products = new ArrayList<>();\n    private String paymentMethod;\n    private double discountRate;\n\n    public void addProduct(Product product) {\n        products.add(product);\n    }\n\n    public double calculateTotal() {\n        double total = 0;\n        for (Product p : products) {\n            total += p.getPrice();\n        }\n        return total * (1 - discountRate);\n    }\n\n    public void clear() {\n        products.clear();\n    }\n\n    public List<Product> getProducts() {\n        return products;\n    }\n\n    public void setPaymentMethod(String method) {\n        this.paymentMethod = method;\n    }\n\n    public String getPaymentMethod() {\n        return paymentMethod;\n    }\n\n\n    public double calculateTax(double rate) {\n        return calculateTotal() * rate;\n    }\n\n\n    public String generateOrderSummary(Customer customer) {\n        return \"Order for \" + customer.getName() +\n               \" with \" + products.size() + \" products. Total: $\" + calculateTotal();\n    }\n}",
+    "classFields": [
+      {
+        "var_type": "List<Product>",
+        "var_name": "products"
+      },
+      {
+        "var_type": "String",
+        "var_name": "paymentMethod"
+      },
+      {
+        "var_type": "double",
+        "var_name": "discountRate"
+      }
+    ],
+    "methods": {
+      "addProduct": "Adds a product to the ecommerce platform's product list.",
+      "calculateTotal": "Sends the total cost of all products after applying the discount rate to the `calculateTotal` method.",
+      "clear": "This method `clear` clears all products from the cart.",
+      "getProducts": "This method returns a list of all products available for purchase.",
+      "setPaymentMethod": "This method `setPaymentMethod` sets paymentMethod to `method`.",
+      "getPaymentMethod": "This method returns a string representing the payment method used for a particular transaction.",
+      "calculateTax": "The `calculateTax` method calculates the tax amount for an order based on the total cost of the items and the rate of taxes applicable to the location.",
+      "generateOrderSummary": "This method generates an order summary for a customer by retrieving their name and the number of products they have purchased from the `Customer` class and calculating the total cost of all products using the `calculateTotal()` method."
+    },
+    "methods_meta": [
+      {
+        "name": "addProduct",
+        "parameters": [
+          "Product"
+        ],
+        "methodCalls": [
+          "products.add"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Product>",
+            "var_name": "products"
+          },
+          {
+            "var_type": "String",
+            "var_name": "paymentMethod"
+          },
+          {
+            "var_type": "double",
+            "var_name": "discountRate"
+          }
+        ],
+        "methodBody": "{\n    products.add(product);\n}"
+      },
+      {
+        "name": "calculateTotal",
+        "parameters": [],
+        "methodCalls": [
+          "p.getPrice"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Product>",
+            "var_name": "products"
+          },
+          {
+            "var_type": "String",
+            "var_name": "paymentMethod"
+          },
+          {
+            "var_type": "double",
+            "var_name": "discountRate"
+          }
+        ],
+        "methodBody": "{\n    double total = 0;\n    for (Product p : products) {\n        total += p.getPrice();\n    }\n    return total * (1 - discountRate);\n}"
+      },
+      {
+        "name": "clear",
+        "parameters": [],
+        "methodCalls": [
+          "products.clear"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Product>",
+            "var_name": "products"
+          },
+          {
+            "var_type": "String",
+            "var_name": "paymentMethod"
+          },
+          {
+            "var_type": "double",
+            "var_name": "discountRate"
+          }
+        ],
+        "methodBody": "{\n    products.clear();\n}"
+      },
+      {
+        "name": "getProducts",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Product>",
+            "var_name": "products"
+          },
+          {
+            "var_type": "String",
+            "var_name": "paymentMethod"
+          },
+          {
+            "var_type": "double",
+            "var_name": "discountRate"
+          }
+        ],
+        "methodBody": "{\n    return products;\n}"
+      },
+      {
+        "name": "setPaymentMethod",
+        "parameters": [
+          "String"
+        ],
+        "methodCalls": [],
+        "methodFieldAccess": [
+          "this.paymentMethod"
+        ],
+        "classFields": [
+          {
+            "var_type": "List<Product>",
+            "var_name": "products"
+          },
+          {
+            "var_type": "String",
+            "var_name": "paymentMethod"
+          },
+          {
+            "var_type": "double",
+            "var_name": "discountRate"
+          }
+        ],
+        "methodBody": "{\n    this.paymentMethod = method;\n}"
+      },
+      {
+        "name": "getPaymentMethod",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Product>",
+            "var_name": "products"
+          },
+          {
+            "var_type": "String",
+            "var_name": "paymentMethod"
+          },
+          {
+            "var_type": "double",
+            "var_name": "discountRate"
+          }
+        ],
+        "methodBody": "{\n    return paymentMethod;\n}"
+      },
+      {
+        "name": "calculateTax",
+        "parameters": [
+          "double"
+        ],
+        "methodCalls": [
+          "calculateTotal"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Product>",
+            "var_name": "products"
+          },
+          {
+            "var_type": "String",
+            "var_name": "paymentMethod"
+          },
+          {
+            "var_type": "double",
+            "var_name": "discountRate"
+          }
+        ],
+        "methodBody": "{\n    return calculateTotal() * rate;\n}"
+      },
+      {
+        "name": "generateOrderSummary",
+        "parameters": [
+          "Customer"
+        ],
+        "methodCalls": [
+          "customer.getName",
+          "products.size",
+          "calculateTotal"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Product>",
+            "var_name": "products"
+          },
+          {
+            "var_type": "String",
+            "var_name": "paymentMethod"
+          },
+          {
+            "var_type": "double",
+            "var_name": "discountRate"
+          }
+        ],
+        "methodBody": "{\n    return \"Order for \" + customer.getName() + \" with \" + products.size() + \" products. Total: $\" + calculateTotal();\n}"
+      }
+    ]
+  }
+}

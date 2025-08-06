@@ -1,0 +1,184 @@
+[
+  {
+    "method": "compileDailySales",
+    "current_class": "ReportService",
+    "best_class": "ReportService",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getId",
+    "current_class": "Order",
+    "best_class": "Order",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getCustomer",
+    "current_class": "Order",
+    "best_class": "Order",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getTotal",
+    "current_class": "Order",
+    "best_class": "Order",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "save",
+    "current_class": "OrderRepository",
+    "best_class": "OrderRepository",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "delete",
+    "current_class": "OrderRepository",
+    "best_class": "OrderRepository",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "findAll",
+    "current_class": "OrderRepository",
+    "best_class": "OrderRepository",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getName",
+    "current_class": "Customer",
+    "best_class": "Customer",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getContact",
+    "current_class": "Customer",
+    "best_class": "Customer",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "notify",
+    "current_class": "Customer",
+    "best_class": "NotificationService",
+    "score": 0.6610000133514404,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "notify",
+    "current_class": "NotificationService",
+    "best_class": "NotificationService",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getName",
+    "current_class": "MenuItem",
+    "best_class": "MenuItem",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getPrice",
+    "current_class": "MenuItem",
+    "best_class": "MenuItem",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "add",
+    "current_class": "MenuRepository",
+    "best_class": "Order",
+    "score": 0.6650000214576721,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "remove",
+    "current_class": "MenuRepository",
+    "best_class": "MenuRepository",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "findByName",
+    "current_class": "MenuRepository",
+    "best_class": "MenuRepository",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "loadAll",
+    "current_class": "MenuRepository",
+    "best_class": "MenuRepository",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "saveAll",
+    "current_class": "MenuRepository",
+    "best_class": "OrderRepository",
+    "score": 0.6119999885559082,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "addMenuItem",
+    "current_class": "Restaurant",
+    "best_class": "MenuRepository",
+    "score": 0.8100000023841858,
+    "action": "MOVE to MenuRepository"
+  },
+  {
+    "method": "removeMenuItem",
+    "current_class": "Restaurant",
+    "best_class": "MenuRepository",
+    "score": 0.828000009059906,
+    "action": "MOVE to MenuRepository"
+  },
+  {
+    "method": "findMenuItem",
+    "current_class": "Restaurant",
+    "best_class": "MenuRepository",
+    "score": 0.8579999804496765,
+    "action": "MOVE to MenuRepository"
+  },
+  {
+    "method": "placeOrder",
+    "current_class": "Restaurant",
+    "best_class": "OrderRepository",
+    "score": 0.8240000009536743,
+    "action": "MOVE to OrderRepository"
+  },
+  {
+    "method": "cancelOrder",
+    "current_class": "Restaurant",
+    "best_class": "OrderRepository",
+    "score": 0.7680000066757202,
+    "action": "MOVE to OrderRepository"
+  },
+  {
+    "method": "loadMenu",
+    "current_class": "Restaurant",
+    "best_class": "MenuRepository",
+    "score": 0.8069999814033508,
+    "action": "MOVE to MenuRepository"
+  },
+  {
+    "method": "saveMenu",
+    "current_class": "Restaurant",
+    "best_class": "MenuRepository",
+    "score": 0.8309999704360962,
+    "action": "MOVE to MenuRepository"
+  },
+  {
+    "method": "generateDailyReport",
+    "current_class": "Restaurant",
+    "best_class": "ReportService",
+    "score": 0.7590000033378601,
+    "action": "MOVE to ReportService"
+  }
+]

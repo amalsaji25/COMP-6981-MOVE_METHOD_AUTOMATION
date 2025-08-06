@@ -1,0 +1,191 @@
+[
+  {
+    "method": "getId",
+    "current_class": "Order",
+    "best_class": "Order",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getTotal",
+    "current_class": "Order",
+    "best_class": "Order",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "printInvoice",
+    "current_class": "Order",
+    "best_class": "Order",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "formatInvoiceForEmail",
+    "current_class": "Order",
+    "best_class": "Order",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getName",
+    "current_class": "Product",
+    "best_class": "Product",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getPrice",
+    "current_class": "Product",
+    "best_class": "Product",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getCategory",
+    "current_class": "Product",
+    "best_class": "Product",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "placeOrder",
+    "current_class": "Customer",
+    "best_class": "OrderService",
+    "score": 0.7039999961853027,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "getName",
+    "current_class": "Customer",
+    "best_class": "Customer",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getEmail",
+    "current_class": "Customer",
+    "best_class": "Customer",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getOrderHistory",
+    "current_class": "Customer",
+    "best_class": "Customer",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "sendPromotionalEmail",
+    "current_class": "Customer",
+    "best_class": "Customer",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "calculateLoyaltyPoints",
+    "current_class": "Customer",
+    "best_class": "Customer",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "logOrder",
+    "current_class": "OrderService",
+    "best_class": "Order",
+    "score": 0.7210000157356262,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "refundOrder",
+    "current_class": "OrderService",
+    "best_class": "OrderService",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "sendEmail",
+    "current_class": "NotificationService",
+    "best_class": "NotificationService",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "processPayment",
+    "current_class": "PaymentService",
+    "best_class": "PaymentService",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "validateCardNumber",
+    "current_class": "PaymentService",
+    "best_class": "PaymentService",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "fraudCheck",
+    "current_class": "PaymentService",
+    "best_class": "PaymentService",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "addProduct",
+    "current_class": "Cart",
+    "best_class": "Product",
+    "score": 0.6320000290870667,
+    "action": "EXTRACT to new class"
+  },
+  {
+    "method": "calculateTotal",
+    "current_class": "Cart",
+    "best_class": "Cart",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "clear",
+    "current_class": "Cart",
+    "best_class": "Cart",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getProducts",
+    "current_class": "Cart",
+    "best_class": "Cart",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "setPaymentMethod",
+    "current_class": "Cart",
+    "best_class": "Cart",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "getPaymentMethod",
+    "current_class": "Cart",
+    "best_class": "Cart",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "calculateTax",
+    "current_class": "Cart",
+    "best_class": "Cart",
+    "score": 1.0,
+    "action": "KEEP"
+  },
+  {
+    "method": "generateOrderSummary",
+    "current_class": "Cart",
+    "best_class": "Cart",
+    "score": 1.0,
+    "action": "KEEP"
+  }
+]

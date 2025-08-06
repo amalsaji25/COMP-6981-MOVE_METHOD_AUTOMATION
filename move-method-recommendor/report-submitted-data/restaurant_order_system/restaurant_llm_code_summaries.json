@@ -1,0 +1,697 @@
+{
+  "ReportService": {
+    "summary": "The Java class `ReportService` is responsible for generating daily sales reports based on a list of orders. The class does not own any data fields, but it has one public method called `compileDailySales`, which takes a list of orders as an argument and returns a string that summarizes the number of orders and their total revenue.\n\nThe method `compileDailySales` uses the stream API to sum up the total of all orders in the list, and then it formats the output as a string that includes the count of orders and the total revenue. The method also returns this string.\n\nThe class does not use any external classes or make any calls to other methods. It only uses the `List` interface and the `stream()` method from the Java 8 API.",
+    "uses_classes": [
+      "List<Order>",
+      "orders"
+    ],
+    "package": "java.restaurant",
+    "classBody": "package java.restaurant;\n\nimport java.util.List;\n\npublic class ReportService {\n    public String compileDailySales(List<Order> orders) {\n        double total = orders.stream()\n            .mapToDouble(Order::getTotal)\n            .sum();\n        int count = orders.size();\n        return \"Daily Sales: \" + count + \" orders, Total revenue: $\" + total;\n    }\n}\n",
+    "classFields": [],
+    "methods": {
+      "compileDailySales": "This method compiles daily sales by mapping each order's total to its corresponding double value and summing up all these values using `stream().mapToDouble(Order::getTotal).sum()`. It also returns the number of orders in the list (i.e., `orders.size()`) as an integer, which is used to generate a string with the daily sales information."
+    },
+    "methods_meta": [
+      {
+        "name": "compileDailySales",
+        "parameters": [
+          "List<Order>"
+        ],
+        "methodCalls": [
+          "orders.stream().mapToDouble(Order::getTotal).sum",
+          "orders.stream().mapToDouble",
+          "orders.stream",
+          "orders.size"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [],
+        "methodBody": "{\n    double total = orders.stream().mapToDouble(Order::getTotal).sum();\n    int count = orders.size();\n    return \"Daily Sales: \" + count + \" orders, Total revenue: $\" + total;\n}"
+      }
+    ]
+  },
+  "Order": {
+    "summary": "The Java class `Order` is a representation of a restaurant order, which contains information about the customer who placed the order, the menu items they selected, and the total cost of their order. It owns three fields: `id`, `customer`, and `items`. The `id` field is used to uniquely identify each order, the `customer` field represents the customer who placed the order, and the `items` field contains a list of menu items that were selected for the order.\n\nThe methods in this class include:\n\n* `getId()`: Returns the unique identifier of the order.\n* `getCustomer()`: Returns the customer who placed the order.\n* `getTotal()`: Returns the total cost of the order, which is calculated by summing the prices of all menu items that were selected for the order.\n\nThis class uses two external classes: `Customer` and `MenuItem`. The `Customer` class represents a restaurant customer, while the `MenuItem` class represents a single menu item that can be ordered at the restaurant.",
+    "uses_classes": [
+      "items"
+    ],
+    "package": "java.restaurant",
+    "classBody": "package java.restaurant;\n\n\nimport java.util.*;\n\npublic class Order {\n    private static int nextId = 1;\n    private final int id;\n    private final Customer customer;\n    private final List<MenuItem> items;\n\n    public Order(Customer c, List<MenuItem> i) {\n        id = nextId++;\n        customer = c;\n        items = new ArrayList<>(i);\n    }\n\n    public int getId() { return id; }\n    public Customer getCustomer() { return customer; }\n\n    public double getTotal() {\n        return items.stream().mapToDouble(MenuItem::getPrice).sum();\n    }\n}\n",
+    "classFields": [
+      {
+        "var_type": "int",
+        "var_name": "nextId"
+      },
+      {
+        "var_type": "int",
+        "var_name": "id"
+      },
+      {
+        "var_type": "Customer",
+        "var_name": "customer"
+      },
+      {
+        "var_type": "List<MenuItem>",
+        "var_name": "items"
+      }
+    ],
+    "methods": {
+      "getId": "Returns the id of this restaurant as an integer.",
+      "getCustomer": "Gets the customer from the restaurant.",
+      "getTotal": "This method calculates the total cost of all items in an order. It uses the `items` field to access a list of menu items and their prices. The method first maps each item's price to its double value using the `mapToDouble` function, then sums up all these values to get the total cost."
+    },
+    "methods_meta": [
+      {
+        "name": "getId",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "int",
+            "var_name": "nextId"
+          },
+          {
+            "var_type": "int",
+            "var_name": "id"
+          },
+          {
+            "var_type": "Customer",
+            "var_name": "customer"
+          },
+          {
+            "var_type": "List<MenuItem>",
+            "var_name": "items"
+          }
+        ],
+        "methodBody": "{\n    return id;\n}"
+      },
+      {
+        "name": "getCustomer",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "int",
+            "var_name": "nextId"
+          },
+          {
+            "var_type": "int",
+            "var_name": "id"
+          },
+          {
+            "var_type": "Customer",
+            "var_name": "customer"
+          },
+          {
+            "var_type": "List<MenuItem>",
+            "var_name": "items"
+          }
+        ],
+        "methodBody": "{\n    return customer;\n}"
+      },
+      {
+        "name": "getTotal",
+        "parameters": [],
+        "methodCalls": [
+          "items.stream().mapToDouble(MenuItem::getPrice).sum",
+          "items.stream().mapToDouble",
+          "items.stream"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "int",
+            "var_name": "nextId"
+          },
+          {
+            "var_type": "int",
+            "var_name": "id"
+          },
+          {
+            "var_type": "Customer",
+            "var_name": "customer"
+          },
+          {
+            "var_type": "List<MenuItem>",
+            "var_name": "items"
+          }
+        ],
+        "methodBody": "{\n    return items.stream().mapToDouble(MenuItem::getPrice).sum();\n}"
+      }
+    ]
+  },
+  "OrderRepository": {
+    "summary": "The `OrderRepository` class owns a list of orders, which is stored as a private field named `orders`. It also has three methods: `save`, `delete`, and `findAll`.\n\n* `save`: takes an `Order` object as input and adds it to the list of orders.\n* `delete`: takes an `Order` object as input and removes it from the list of orders if it exists. It returns a boolean indicating whether the order was successfully deleted or not.\n* `findAll`: returns a new list containing all the orders in the repository.\n\nThe class uses the `List` interface to store its orders, which is implemented by an `ArrayList`.",
+    "uses_classes": [
+      "Order",
+      "orders"
+    ],
+    "package": "java.restaurant",
+    "classBody": "package java.restaurant;\n\nimport java.util.*;\n\npublic class OrderRepository {\n    private final List<Order> orders = new ArrayList<>();\n\n    public void save(Order o)     { orders.add(o); }\n    public boolean delete(Order o){ return orders.remove(o); }\n    public List<Order> findAll()  { return new ArrayList<>(orders); }\n}\n",
+    "classFields": [
+      {
+        "var_type": "List<Order>",
+        "var_name": "orders"
+      }
+    ],
+    "methods": {
+      "save": "The `save` method in Java's `Restaurant` class adds an `Order` object to the `orders` list, which is a field of type `List<Order>`.",
+      "delete": "This method `delete` removes an order from the `orders` list by calling the `remove` method of that list and passing in the `Order` object to be removed.",
+      "findAll": "This method `findAll` returns a list of all orders in the system as an ArrayList object"
+    },
+    "methods_meta": [
+      {
+        "name": "save",
+        "parameters": [
+          "Order"
+        ],
+        "methodCalls": [
+          "orders.add"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Order>",
+            "var_name": "orders"
+          }
+        ],
+        "methodBody": "{\n    orders.add(o);\n}"
+      },
+      {
+        "name": "delete",
+        "parameters": [
+          "Order"
+        ],
+        "methodCalls": [
+          "orders.remove"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Order>",
+            "var_name": "orders"
+          }
+        ],
+        "methodBody": "{\n    return orders.remove(o);\n}"
+      },
+      {
+        "name": "findAll",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<Order>",
+            "var_name": "orders"
+          }
+        ],
+        "methodBody": "{\n    return new ArrayList<>(orders);\n}"
+      }
+    ]
+  },
+  "Customer": {
+    "summary": "1. The class `Customer` owns two fields: `name` and `contact`.\n2. The method `getName()` returns the customer's name as a string.\nThe method `getContact()` returns the customer's contact information as a string.\n3. The method `notify(String msg)` notifies the customer of an event or message by using the `NotificationService` class, which is an external class used by the `Customer` class.",
+    "uses_classes": [
+      "NotificationService",
+      "String"
+    ],
+    "package": "java.restaurant",
+    "classBody": "package java.restaurant;\n\npublic class Customer {\n    private final String name;\n    private final String contact;\n\n    public Customer(String n, String c) {\n        name = n; contact = c;\n    }\n\n    public String getName() { return name; }\n    public String getContact() { return contact; }\n\n    public void notify(String msg) {\n        NotificationService.notify(this, msg);\n    }\n}\n",
+    "classFields": [
+      {
+        "var_type": "String",
+        "var_name": "name"
+      },
+      {
+        "var_type": "String",
+        "var_name": "contact"
+      }
+    ],
+    "methods": {
+      "getName": "The `getName` method of the `Restaurant` class returns the name of the restaurant as a string.",
+      "getContact": "This method `getContact()` returns a String value representing the contact information for this restaurant.",
+      "notify": "Sends a notification to the user when a new order is placed by calling NotificationService.notify()."
+    },
+    "methods_meta": [
+      {
+        "name": "getName",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "String",
+            "var_name": "contact"
+          }
+        ],
+        "methodBody": "{\n    return name;\n}"
+      },
+      {
+        "name": "getContact",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "String",
+            "var_name": "contact"
+          }
+        ],
+        "methodBody": "{\n    return contact;\n}"
+      },
+      {
+        "name": "notify",
+        "parameters": [
+          "String"
+        ],
+        "methodCalls": [
+          "NotificationService.notify"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "String",
+            "var_name": "contact"
+          }
+        ],
+        "methodBody": "{\n    NotificationService.notify(this, msg);\n}"
+      }
+    ]
+  },
+  "NotificationService": {
+    "summary": "This Java class, `NotificationService`, is part of the `java.restaurant` package and provides a service for sending notifications to customers. The class does not own any fields, but it has one method, `void notify(Customer c, String msg)`. This method takes two parameters: a `Customer` object and a `String` message. The method's purpose is to send a notification to the customer using their contact information (e.g., email address or phone number) and the provided message.\n\nThe class uses the `Customer` class from the same package, which represents a customer in the restaurant system. Additionally, it uses the `String` class from the Java standard library to represent the notification message.",
+    "uses_classes": [
+      "Customer",
+      "String",
+      "System",
+      "c"
+    ],
+    "package": "java.restaurant",
+    "classBody": "package java.restaurant;\n\npublic class NotificationService {\n    public static void notify(Customer c, String msg) {\n        System.out.println(\"Notify \" + c.getContact() + \": \" + msg);\n    }\n}\n",
+    "classFields": [],
+    "methods": {
+      "notify": "The `notify` method in the `java.restaurant` package sends a message to the customer's contact information and prints it to the console using `System.out.println`."
+    },
+    "methods_meta": [
+      {
+        "name": "notify",
+        "parameters": [
+          "Customer",
+          "String"
+        ],
+        "methodCalls": [
+          "System.out.println",
+          "c.getContact"
+        ],
+        "methodFieldAccess": [
+          "System.out"
+        ],
+        "classFields": [],
+        "methodBody": "{\n    System.out.println(\"Notify \" + c.getContact() + \": \" + msg);\n}"
+      }
+    ]
+  },
+  "MenuItem": {
+    "summary": "The `MenuItem` class is a simple data container with two fields: `name` of type `String`, and `price` of type `double`. The class has two methods: `getName()` which returns the name of the item, and `getPrice()` which returns the price.\n\nThere are no external classes used by this class.",
+    "uses_classes": [],
+    "package": "java.restaurant",
+    "classBody": "package java.restaurant;\n\npublic class MenuItem {\n    private final String name;\n    private final double price;\n\n    public MenuItem(String n, double p) {\n        name = n;\n        price = p;\n    }\n\n    public String getName() { return name; }\n    public double getPrice() { return price; }\n}\n",
+    "classFields": [
+      {
+        "var_type": "String",
+        "var_name": "name"
+      },
+      {
+        "var_type": "double",
+        "var_name": "price"
+      }
+    ],
+    "methods": {
+      "getName": "The `getName()` method returns the name of the restaurant as a string.",
+      "getPrice": "The `getPrice` method returns the value of the `price` field as a double."
+    },
+    "methods_meta": [
+      {
+        "name": "getName",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "double",
+            "var_name": "price"
+          }
+        ],
+        "methodBody": "{\n    return name;\n}"
+      },
+      {
+        "name": "getPrice",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "String",
+            "var_name": "name"
+          },
+          {
+            "var_type": "double",
+            "var_name": "price"
+          }
+        ],
+        "methodBody": "{\n    return price;\n}"
+      }
+    ]
+  },
+  "MenuRepository": {
+    "summary": "MenuRepository class has a List<MenuItem> called items as a field. The MenuItem class has getters for name, price, description, and category. Method names include add, remove, findByName, loadAll, saveAll, and the method descriptions are:\n\n* add: takes a MenuItem argument to add an item to the menu;\n* remove: takes a MenuItem argument to remove an item from the menu;\n* findByName: takes a String name as input and returns the first MenuItem found with that name, ignoring case;\n* loadAll: returns a new List<MenuItem> containing all items in the menu;\n* saveAll: saves all changes made to the menu.",
+    "uses_classes": [
+      "MenuItem",
+      "String",
+      "i",
+      "items"
+    ],
+    "package": "java.restaurant",
+    "classBody": "package java.restaurant;\n\nimport java.util.*;\n\npublic class MenuRepository {\n    private final List<MenuItem> items = new ArrayList<>();\n\n    public void add(MenuItem m)    { items.add(m); }\n    public void remove(MenuItem m) { items.remove(m); }\n    public MenuItem findByName(String name) {\n        return items.stream()\n            .filter(i -> i.getName().equalsIgnoreCase(name))\n            .findFirst().orElse(null);\n    }\n    public List<MenuItem> loadAll() {\n        return new ArrayList<>(items);\n    }\n    public void saveAll() {\n    }\n}\n",
+    "classFields": [
+      {
+        "var_type": "List<MenuItem>",
+        "var_name": "items"
+      }
+    ],
+    "methods": {
+      "add": "The method `add` adds a menu item to the restaurant's menu items.",
+      "remove": "This method `remove` removes the specified MenuItem from the collection of items stored by this Restaurant class. It does so by calling the `items.remove()` method on the item passed as an argument, which removes the item from the collection and returns void.",
+      "findByName": "The `findByName` method queries an ordered list of menu items by their names, using a case-insensitive filter to match the name provided in the argument.",
+      "loadAll": "Method `loadAll` returns all menu items from a list of menu items as an `ArrayList`.",
+      "saveAll": "Saves all entities of type `T` to the database using the configured persistence mechanism."
+    },
+    "methods_meta": [
+      {
+        "name": "add",
+        "parameters": [
+          "MenuItem"
+        ],
+        "methodCalls": [
+          "items.add"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<MenuItem>",
+            "var_name": "items"
+          }
+        ],
+        "methodBody": "{\n    items.add(m);\n}"
+      },
+      {
+        "name": "remove",
+        "parameters": [
+          "MenuItem"
+        ],
+        "methodCalls": [
+          "items.remove"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<MenuItem>",
+            "var_name": "items"
+          }
+        ],
+        "methodBody": "{\n    items.remove(m);\n}"
+      },
+      {
+        "name": "findByName",
+        "parameters": [
+          "String"
+        ],
+        "methodCalls": [
+          "items.stream().filter(i -> i.getName().equalsIgnoreCase(name)).findFirst().orElse",
+          "items.stream().filter(i -> i.getName().equalsIgnoreCase(name)).findFirst",
+          "items.stream().filter",
+          "items.stream",
+          "i.getName().equalsIgnoreCase",
+          "i.getName"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<MenuItem>",
+            "var_name": "items"
+          }
+        ],
+        "methodBody": "{\n    return items.stream().filter(i -> i.getName().equalsIgnoreCase(name)).findFirst().orElse(null);\n}"
+      },
+      {
+        "name": "loadAll",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<MenuItem>",
+            "var_name": "items"
+          }
+        ],
+        "methodBody": "{\n    return new ArrayList<>(items);\n}"
+      },
+      {
+        "name": "saveAll",
+        "parameters": [],
+        "methodCalls": [],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "List<MenuItem>",
+            "var_name": "items"
+          }
+        ],
+        "methodBody": "{\n}"
+      }
+    ]
+  },
+  "Restaurant": {
+    "summary": "The `Restaurant` class owns the following fields:\n* `menuRepo`: a `MenuRepository` object for managing menu items\n* `orderRepo`: an `OrderRepository` object for managing orders\n\nThe methods of the `Restaurant` class are as follows:\n* `addMenuItem(MenuItem)`: adds a new menu item to the restaurant's menu\n* `removeMenuItem(MenuItem)`: removes a menu item from the restaurant's menu\n* `findMenuItem(String)`: finds a specific menu item by name\n* `placeOrder(Customer, List<MenuItem>)`: creates a new order for a customer with the specified menu items\n* `cancelOrder(Order)`: cancels an existing order\n* `loadMenu()`: loads all available menu items from a data source (e.g., database or file)\n* `saveMenu()`: saves all menu items to a data source (e.g., database or file)\n* `generateDailyReport()`: generates a daily sales report based on orders placed in the current day\n\nThe class uses external classes for the following purposes:\n* `MenuItem` and `Order`: used as parameters or return types for methods that manipulate menu items or orders\n* `Customer`: used as a parameter for the `placeOrder()` method to specify the customer placing an order\n* `List<MenuItem>`: used as a parameter for the `placeOrder()` method to specify the menu items being ordered\n* `ReportService`: used by the `generateDailyReport()` method to generate the daily sales report",
+    "uses_classes": [
+      "Customer",
+      "List<MenuItem>",
+      "MenuItem",
+      "NotificationService",
+      "Order",
+      "String",
+      "menuRepo",
+      "o",
+      "orderRepo",
+      "rs"
+    ],
+    "package": "java.restaurant",
+    "classBody": "package java.restaurant;\n\nimport java.util.*;\n\npublic class Restaurant {\n    private final MenuRepository menuRepo = new MenuRepository();\n    private final OrderRepository orderRepo = new OrderRepository();\n\n    public void addMenuItem(MenuItem item) {\n        menuRepo.add(item);\n    }\n\n    public void removeMenuItem(MenuItem item) {\n        menuRepo.remove(item);\n    }\n\n    public MenuItem findMenuItem(String name) {\n        return menuRepo.findByName(name);\n    }\n\n    public Order placeOrder(Customer customer, List<MenuItem> items) {\n        Order o = new Order(customer, items);\n        orderRepo.save(o);\n        NotificationService.notify(customer, \"Your order has been placed.\");\n        return o;\n    }\n\n    public boolean cancelOrder(Order o) {\n        boolean removed = orderRepo.delete(o);\n        if (removed) {\n            NotificationService.notify(o.getCustomer(), \"Your order has been cancelled.\");\n        }\n        return removed;\n    }\n\n    public void loadMenu() {\n        menuRepo.loadAll();\n    }\n\n    public void saveMenu() {\n        menuRepo.saveAll();\n    }\n\n    public String generateDailyReport() {\n        ReportService rs = new ReportService();\n        return rs.compileDailySales(orderRepo.findAll());\n    }\n}\n",
+    "classFields": [
+      {
+        "var_type": "MenuRepository",
+        "var_name": "menuRepo"
+      },
+      {
+        "var_type": "OrderRepository",
+        "var_name": "orderRepo"
+      }
+    ],
+    "methods": {
+      "addMenuItem": "Adds a menu item to the restaurant's menu repository.",
+      "removeMenuItem": "`removeMenuItem` removes an item from the menu repository by calling `menuRepo.remove(item)`.",
+      "findMenuItem": "This method retrieves a menu item from the repository based on its name.",
+      "placeOrder": "This method places an order for a customer by creating a new Order object, saving it to the repository, and sending a notification to the customer using the NotificationService class.",
+      "cancelOrder": "This method `cancelOrder` cancels an order by deleting it from the repository and notifying the customer via email or SMS about the cancellation.",
+      "loadMenu": "This method `loadMenu` loads all menu items from the repository by calling the `menuRepo.loadAll()` method.",
+      "saveMenu": "The `saveMenu` method saves all menu items to the database by calling the `menuRepo.saveAll()` method.",
+      "generateDailyReport": "This method generates a daily report by compiling sales information from all orders in the database using the `ReportService` class and the `orderRepo.findAll()` method."
+    },
+    "methods_meta": [
+      {
+        "name": "addMenuItem",
+        "parameters": [
+          "MenuItem"
+        ],
+        "methodCalls": [
+          "menuRepo.add"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "MenuRepository",
+            "var_name": "menuRepo"
+          },
+          {
+            "var_type": "OrderRepository",
+            "var_name": "orderRepo"
+          }
+        ],
+        "methodBody": "{\n    menuRepo.add(item);\n}"
+      },
+      {
+        "name": "removeMenuItem",
+        "parameters": [
+          "MenuItem"
+        ],
+        "methodCalls": [
+          "menuRepo.remove"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "MenuRepository",
+            "var_name": "menuRepo"
+          },
+          {
+            "var_type": "OrderRepository",
+            "var_name": "orderRepo"
+          }
+        ],
+        "methodBody": "{\n    menuRepo.remove(item);\n}"
+      },
+      {
+        "name": "findMenuItem",
+        "parameters": [
+          "String"
+        ],
+        "methodCalls": [
+          "menuRepo.findByName"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "MenuRepository",
+            "var_name": "menuRepo"
+          },
+          {
+            "var_type": "OrderRepository",
+            "var_name": "orderRepo"
+          }
+        ],
+        "methodBody": "{\n    return menuRepo.findByName(name);\n}"
+      },
+      {
+        "name": "placeOrder",
+        "parameters": [
+          "Customer",
+          "List<MenuItem>"
+        ],
+        "methodCalls": [
+          "orderRepo.save",
+          "NotificationService.notify"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "MenuRepository",
+            "var_name": "menuRepo"
+          },
+          {
+            "var_type": "OrderRepository",
+            "var_name": "orderRepo"
+          }
+        ],
+        "methodBody": "{\n    Order o = new Order(customer, items);\n    orderRepo.save(o);\n    NotificationService.notify(customer, \"Your order has been placed.\");\n    return o;\n}"
+      },
+      {
+        "name": "cancelOrder",
+        "parameters": [
+          "Order"
+        ],
+        "methodCalls": [
+          "orderRepo.delete",
+          "NotificationService.notify",
+          "o.getCustomer"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "MenuRepository",
+            "var_name": "menuRepo"
+          },
+          {
+            "var_type": "OrderRepository",
+            "var_name": "orderRepo"
+          }
+        ],
+        "methodBody": "{\n    boolean removed = orderRepo.delete(o);\n    if (removed) {\n        NotificationService.notify(o.getCustomer(), \"Your order has been cancelled.\");\n    }\n    return removed;\n}"
+      },
+      {
+        "name": "loadMenu",
+        "parameters": [],
+        "methodCalls": [
+          "menuRepo.loadAll"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "MenuRepository",
+            "var_name": "menuRepo"
+          },
+          {
+            "var_type": "OrderRepository",
+            "var_name": "orderRepo"
+          }
+        ],
+        "methodBody": "{\n    menuRepo.loadAll();\n}"
+      },
+      {
+        "name": "saveMenu",
+        "parameters": [],
+        "methodCalls": [
+          "menuRepo.saveAll"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "MenuRepository",
+            "var_name": "menuRepo"
+          },
+          {
+            "var_type": "OrderRepository",
+            "var_name": "orderRepo"
+          }
+        ],
+        "methodBody": "{\n    menuRepo.saveAll();\n}"
+      },
+      {
+        "name": "generateDailyReport",
+        "parameters": [],
+        "methodCalls": [
+          "rs.compileDailySales",
+          "orderRepo.findAll"
+        ],
+        "methodFieldAccess": [],
+        "classFields": [
+          {
+            "var_type": "MenuRepository",
+            "var_name": "menuRepo"
+          },
+          {
+            "var_type": "OrderRepository",
+            "var_name": "orderRepo"
+          }
+        ],
+        "methodBody": "{\n    ReportService rs = new ReportService();\n    return rs.compileDailySales(orderRepo.findAll());\n}"
+      }
+    ]
+  }
+}
