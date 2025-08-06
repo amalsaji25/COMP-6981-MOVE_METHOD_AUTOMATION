@@ -67,40 +67,40 @@ def get_class_summary(llm_model_name: str, pkg_name: str, cls_name: str, methods
             used_classes.add(param)
 
     # Construct LLM prompt
+    # Build a comma-separated list of method names
+    method_list = ", ".join(m.get("name", "") for m in methods_meta) or "None"
+
     llm_prompt = f"""
-                    ### PACKAGE ###
-                    {pkg_name}
+                        ### PACKAGE ###
+                        {pkg_name}
 
-                    ### CLASS & METHODS AST INFO ###
-                    Class: {cls_name}
+                        ### CLASS & METHODS AST INFO ###
+                        Class: {cls_name}
 
-                    **Fields:**
-                    {fields or ' - None'}
+                        **Fields:**
+                        {fields or ' - None'}
 
-                    **Methods:**
-                    {methods or ' - None'}
+                        **Methods:**
+                        {methods or ' - None'}
 
-                    ### CODE ###
-                    {code}
+                        **Method names:**
+                        {method_list}
 
-                    ### INSTRUCTIONS ###
-                    You are summarizing the Java class `{cls_name}` based on its actual code and structure.
+                        ### CODE ###
+                        {code}
 
-                    Include the following in your summary:
+                        ### INSTRUCTIONS ###
+                        You are summarizing the Java class `{cls_name}` based on its actual code and AST.
 
-                    - What data it owns (fields)
-                    - What services/methods it offers (just summarize intent)
-                    - What external classes it **uses** (e.g., in parameters, method calls, or field types)
+                        1. Describe what data it owns (fields).
+                        2. For each method listed above, **mention its name exactly** and in one short phrase summarize its purpose.
+                        3. List any external classes it uses (parameters, calls, or field types).
 
-                    ### RULES ###
-                    - Mention only those classes visible in the AST or code — do NOT assume anything.
-                    - If the class depends on another class, say clearly: "uses class X".
-                    - Do NOT describe how the result is delivered (e.g., email/SMS) unless it's in the code.
-                    - Avoid phrases like "this class contains..." or "this class is responsible for...".
-                    - No method chains or imaginary behavior. Stick to what's in the code.
-
-                    Output a clear, human-readable English summary. Avoid code formatting.
-                    """.strip()
+                        ### RULES ###
+                        - Do NOT invent methods—only mention those in “Method names”.
+                        - Stick to what’s visible in the AST/code; no speculation.
+                        - Keep it concise and human-readable (2–4 sentences).
+                        """.strip()
 
     # LLM response (summary text)
     summary_text = get_summary_with_ollama(llm_model_name, llm_prompt)

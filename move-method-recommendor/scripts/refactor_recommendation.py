@@ -93,12 +93,13 @@ def is_getter_setter(method_meta, method_name):
     """
      Checks if a method is a simple getter or setter with only one line of code.
     """
+
     GETTER_SETTER_PATTERN = re.compile(r"^(get|set|is)[A-Z].*")
 
     if not GETTER_SETTER_PATTERN.match(method_name):
         return False
     body = method_meta.get("methodBody","")
-    lines = [line.strip() for line in body.splitlines() if line.strip()]
+    lines = [l.strip() for l in body.splitlines() if l.strip() not in ["{", "}"]]
     return len(lines) == 1 and ("return" in lines[0] or "=" in lines[0])
 
 def structural_candidates(method_meta, all_classes):
@@ -154,8 +155,8 @@ def structural_candidates(method_meta, all_classes):
                 break  # Avoid duplicates
 
     # 7. Return the filtered candidates, or fallback to all
-    return candidate_classes or list(all_classes)
-#    return list(all_classes)
+#    return candidate_classes or list(all_classes)
+    return list(all_classes)
 
 def same_package_bonus(source_class_package:str, candidate_class_package:str) -> float:
     """
@@ -170,7 +171,7 @@ def field_bonus(method_metadata, candiate_class):
     """
     FIELD_ACCESS_BONUS = 0.10
 
-    if not method_meta:
+    if not method_metadata:
         return 0.0
     
     field_accesses = method_metadata.get("methodFieldAccess")
@@ -186,12 +187,12 @@ def field_bonus(method_metadata, candiate_class):
                 return FIELD_ACCESS_BONUS
     return 0.0
 
-def cohesion_bonus(method_metadata, candiate_class):
+def cohesion_bonus(method_metadata, candiate_class, method_name=None):
     """
      Return a bonus based on how much a method interact with a particular candidate class
     """
 
-    if not method_meta:
+    if not method_metadata:
         return 0.0
     
     # Check if the method invokes the setter methods of the candidate class
@@ -201,7 +202,7 @@ def cohesion_bonus(method_metadata, candiate_class):
     write_calls = 0
     read_calls = 0
 
-    for field_access in method_metadata.get("fieldAccesses", []):
+    for field_access in method_metadata.get("methodFieldAccess", []):
         if "." in field_access:
             object_name, access_type = field_access.split(".", 1)
             object_type = field_type_map.get(object_name)
@@ -220,6 +221,7 @@ def cohesion_bonus(method_metadata, candiate_class):
                 external_calls += 1
 
     bonus = (0.05 * write_calls) + (0.01 * read_calls) + (0.05 * external_calls)
+    
     return bonus
 
 def extract_method_used_classes(method_meta, class_field_map):
@@ -232,7 +234,7 @@ def extract_method_used_classes(method_meta, class_field_map):
     used_classes = set()
 
     # Use parameter types directly
-    used_classes.update(method_meta.get("parameters", []))
+#    used_classes.update(method_meta.get("parameters", []))
 
     # Map field names → types
     field_type_map = {f["var_name"]: f["var_type"] for f in class_field_map}
@@ -314,14 +316,13 @@ if __name__ == "__main__":
         elif is_simple_delegate(method_meta):
             action = "KEEP (simple delegate)"
         elif is_getter_setter(method_meta, method_name):
-            action = "KEEP (getter/setter)"
+            action = "KEEP"
         
         # Core logic to decide whether to keep, move, or extract a method based on its similarity and structural fit with other classes
         else:
             # first let the current class itself be the methods best class with a dummy score
             best_cls, best_score = cls_name, -1.0
-            MOVE_THRESHOLD     = 0.60
-            EXTRACT_THRESHOLD  = 0.50
+            MOVE_THRESHOLD     = 0.75
 
             for candiate_class in structural_candidates(method_meta, classes):
                 # Compute semantic similarity between the method and candidate class using vector embeddings
@@ -335,12 +336,12 @@ if __name__ == "__main__":
                                                 [class_vectors[candiate_class]["code_vec"]]
                                             )[0][0]
 
-                base_score = 0.5 * summary_sim + 0.5 * code_sim
+                base_score = 0.50 * summary_sim + 0.50 * code_sim
 
                 # Add bonus points if the method is closely related to the candidate class (same package, uses its fields, or has similar logic)
                 package_bonus_score = same_package_bonus(source_package, classes[candiate_class]["package"])
                 field_bonus_score = field_bonus(method_meta, candiate_class)
-                cohesion_bonus_score = cohesion_bonus(method_meta, candiate_class)
+                cohesion_bonus_score = cohesion_bonus(method_meta, candiate_class, method_name)
 
                 # bonus if the class is used by the method's current class
                 method_used_classes = extract_method_used_classes(method_meta, classes[cls_name].get("classFields", []))
@@ -361,7 +362,7 @@ if __name__ == "__main__":
                 action = "KEEP"
             elif best_score >= MOVE_THRESHOLD:
                 action = f"MOVE to {best_cls}"
-            elif best_score < EXTRACT_THRESHOLD:
+            elif best_score < MOVE_THRESHOLD:
                 action = "EXTRACT to new class"
 
         recommendation_score = 1.0 if action.startswith("KEEP") else float(round(best_score, 3))
