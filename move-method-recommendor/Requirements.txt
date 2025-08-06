@@ -1,1 +1,1 @@
-pip install torch transformers sentence-transformers scikit-learn numpy
+pip install torch transformers sentence-transformers scikit-learn numpy tabulate
