@@ -311,6 +311,7 @@ if __name__ == "__main__":
         method_meta = methods[(cls_name, method_name)]
         source_package = classes[cls_name]["package"]
 
+        recommendation_score = 1.0
         if cls_name in interface_classes:
             action = "KEEP (inteface)"
         elif is_simple_delegate(method_meta):
@@ -364,8 +365,8 @@ if __name__ == "__main__":
                 action = f"MOVE to {best_cls}"
             elif best_score < MOVE_THRESHOLD:
                 action = "EXTRACT to new class"
+            recommendation_score = float(round(best_score, 3))
 
-        recommendation_score = 1.0 if action.startswith("KEEP") else float(round(best_score, 3))
         recommendations.append({
             "method":        method_name,
             "current_class": cls_name,
